@@ -11,6 +11,8 @@ from core import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+		url(r'^current/', views.current, name='current'),
+    url(r'^victim/', views.victim, name='victim'),
 
     url(r'^admin/', admin.site.urls),
     url(r'^404/$', TemplateView.as_view(template_name='404.html')),

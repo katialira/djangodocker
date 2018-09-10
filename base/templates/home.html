@@ -3,7 +3,21 @@
 
 {% block content %}
 
-homes
+<div class="hero">
+	<h1>Nolte's Lightning Talks</h1>
+	
+	<div class="talks">
+		<p>Cicle #3</p>
+		<ul>
+		{% for talk in talks %}
+			<li><a href="{{talk.link}}" target="_blank">{{talk.name}}</a> By {{talk.human}}</li>
+		{% endfor %}
+		</ul>
+
+		<a class="link" href="{% url 'current' %}">Go to current speaker</a>
+
+	</div>
+
+</div>
 
 {% endblock %}
-

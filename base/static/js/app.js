@@ -1,70 +1,57 @@
-$(function() {
+var current = document.getElementById('current').textContent;
+var victim = document.getElementById('victim').textContent;
 
-  $('.carousel').carousel()
+odoo.default({ el:'.js-odoo', from: current, to: victim, animationDelay: 1000 });
 
-  $('.menu-palindromo').on('click', function(){
-    $('.menu-hover').show();
-  });
+setTimeout(function(){ 
+	$('.wrapper').fadeIn();
+}, 5000);
 
+for (var i = 0; i < 500; i++) {
+	create(i);
+}
 
-  $('.menu-close').on('click', function(){
-    $('.menu-hover').hide();
-  });  
-
-	$('.pal-items').on('mouseenter', 'li', function(){
-		$(this).siblings().children('.itemHVR').fadeIn('fast');
-	});
-
-	$('.pal-items').on('mouseleave', 'li', function(){
-		$(this).siblings().children('.itemHVR').hide();
-	});
-
-  setTimeout( fadeInWord, 3500 );
-
-});
-
-function fadeInWord() {
-  $esto = $( '.palindromo-letras > .animated' );
-  if ( $esto.hasClass( 'stop' ) ){
-    var seconds = ( Math.floor(Math.random() * 2) + 1  ) * 300;
-    setTimeout( randomPink, seconds);
-
-  } else {
-    var seconds = ( Math.floor(Math.random() * 3) + 2  ) * 350;
-    setTimeout( fadeInWord, seconds );
+function create(i) {
+  var width = Math.random() * 8;
+  var height = width * 0.4;
+  var colourIdx = Math.ceil(Math.random() * 3);
+  var colour = "red";
+  switch(colourIdx) {
+    case 1:
+      colour = "yellow";
+      break;
+    case 2:
+      colour = "blue";
+      break;
+    default:
+      colour = "red";
   }
-  $esto.removeClass('opac').removeClass('animated').removeClass('fadeIn').next().addClass( 'animated' ).addClass( 'fadeIn' );
+  $('<div class="confetti-'+i+' '+colour+'"></div>').css({
+    "width" : width+"px",
+    "height" : height+"px",
+    "top" : -Math.random()*20+"%",
+    "left" : Math.random()*100+"%",
+    "opacity" : Math.random()+0.5,
+    "transform" : "rotate("+Math.random()*360+"deg)"
+  }).appendTo('.wrapper');  
   
+  drop(i);
 }
 
-function randomPink() {
-  var $what = $(".palindromo-letras span");
-  $what.removeClass('animated').removeClass('fadeIn');
-  var list = $what.toArray();
-  var elemlength = list.length;
-  var randomnum = Math.floor(Math.random()*elemlength);
-  var randomitem = list[randomnum];
-  $(randomitem).addClass( 'animated' ).addClass( 'fadeIn' );
-
-    var seconds = ( Math.floor(Math.random() * 3) + 2  ) * 600;
-    setTimeout( randomPink, seconds);
-
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  var typed = new Typed('#typed', {
-    stringsElement: '#typed-strings',
-    typeSpeed: 60,
-    backSpeed: 20,
-    startDelay: 0,
-    loop: true,
-    loopCount: Infinity,
-
+function drop(x) {
+  $('.confetti-'+x).animate({
+    top: "100%",
+    left: "+="+Math.random()*15+"%"
+  }, Math.random()*3000 + 3000, function() {
+    reset(x);
   });
-
-});
-
-function prettyLog(str) {
-  console.log('%c ' + str, 'color: green; font-weight: bold;');
 }
 
+function reset(x) {
+  $('.confetti-'+x).animate({
+    "top" : -Math.random()*20+"%",
+    "left" : "-="+Math.random()*15+"%"
+  }, 0, function() {
+    drop(x);             
+  });
+}
