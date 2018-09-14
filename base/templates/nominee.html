@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="hero">
+	<h1>Nolte's Lightning Talks</h1>
+	
+	<div class="current">
+		<div class="form-style-6">
+			<form method="post">
+	    	{% csrf_token %}
+	    	<p>
+	    		<label for="id_user">Human:</label>
+					<select name="user" id="id_user">
+						<option value="">---------</option>
+						{% for nominee in nominees %}
+						<option value="{{nominee.pk}}">{{ nominee }}</option>
+						{% endfor %}
+					</select>
+	    	</p>
+	    	<input type="submit" value="Save victim">
+			</form>
+		</div>
+		<hr>
+
+		<a class="link" href="{% url 'victim' %}">Randomly select victim</a>
+	</div>
+
+</div>
+
+{% endblock %}

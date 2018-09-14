@@ -1,7 +1,16 @@
 var current = document.getElementById('current').textContent;
 var victim = document.getElementById('victim').textContent;
 
-odoo.default({ el:'.js-odoo', from: current, to: victim, animationDelay: 1000 });
+if ( current.length < victim.length ) {
+  var spaces = Math.floor((victim.length - current.length)/2);
+  console.log(spaces);
+  current = ' '.repeat(spaces) + current;
+} else if ( current.length > victim.length ) {
+  var spaces = current.length - victim.length;
+  victim = victim + 'x'.repeat(spaces);
+}
+
+odoo.default({ el:'.js-odoo', from: current, to: victim, animationDelay: 1000, letterAnimationDelay: 100 });
 
 setTimeout(function(){ 
 	$('.wrapper').fadeIn();

@@ -1,8 +1,8 @@
 from django import forms
-from .models import Talks
+from .models import Human, Talks
 
 class TalksForm(forms.ModelForm):
 
    class Meta:
      model = Talks
-     fields = ('human','name', 'link', 'cicle')
+     fields = ('human', 'topic', 'name', 'link', 'cicle')
