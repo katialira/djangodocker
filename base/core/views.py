@@ -21,6 +21,7 @@ def current(request):
 		form = TalksForm(request.POST)
 		if form.is_valid():
 			talk = form.save(commit=False)
+			talk.cicle = 1
 			talk.save()
 			return redirect('nominee')
 
@@ -47,10 +48,12 @@ def nominee(request):
 def victim(request):
 	current = Human.objects.get(is_active=True, current=True)
 	victim = Human.objects.filter(is_active=True, lightning=True).order_by('?').first()
-	current.current = False
-	current.save()
-	victim.current = True
-	victim.lightning = False
-	victim.save()
+	print(current)
+	print(victim)
 
 	return { 'current' : current, 'victim': victim }
+
+
+
+
+

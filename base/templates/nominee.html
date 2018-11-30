@@ -7,7 +7,13 @@
 	<h1>Nolte's Lightning Talks</h1>
 	
 	<div class="current">
+
+		<p class="link"><a href="{% url 'victim' %}">Randomly select victim</a></p>
+
+<!--
+		<br><hr><br>
 		<div class="form-style-6">
+			<p>Pick someone</p>
 			<form method="post">
 	    	{% csrf_token %}
 	    	<p>
@@ -19,12 +25,10 @@
 						{% endfor %}
 					</select>
 	    	</p>
-	    	<input type="submit" value="Save victim">
+	    	<input type="submit" value="Save next">
 			</form>
 		</div>
-		<hr>
-
-		<a class="link" href="{% url 'victim' %}">Randomly select victim</a>
+-->
 	</div>
 
 </div>

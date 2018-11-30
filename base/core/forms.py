@@ -5,4 +5,4 @@ class TalksForm(forms.ModelForm):
 
    class Meta:
      model = Talks
-     fields = ('human', 'topic', 'name', 'link', 'cicle')
+     fields = ('human', 'topic', 'name', 'link')
