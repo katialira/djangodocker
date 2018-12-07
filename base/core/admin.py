@@ -9,4 +9,4 @@ class HumanAdmin(admin.ModelAdmin):
 
 @admin.register(Talks)
 class TalksAdmin(admin.ModelAdmin):
-	list_display = ( 'human', 'name', 'date')
+	list_display = ( 'human', 'name', 'cicle', 'date')

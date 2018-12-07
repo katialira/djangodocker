@@ -8,7 +8,7 @@ from .forms import TalksForm
 
 @render_to('home.html')
 def home(request):
-	talks = Talks.objects.filter(cicle=1)
+	talks = Talks.objects.filter(cicle=1)[4:]
 	return { 'talks' : talks }
 
 
@@ -48,8 +48,12 @@ def nominee(request):
 def victim(request):
 	current = Human.objects.get(is_active=True, current=True)
 	victim = Human.objects.filter(is_active=True, lightning=True).order_by('?').first()
-	print(current)
-	print(victim)
+	
+	current.current = False
+	current.save()
+	victim.current = True
+	victim.lightning = False
+	victim.save()
 
 	return { 'current' : current, 'victim': victim }
 
