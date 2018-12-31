@@ -11,6 +11,8 @@ from core import views
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
+    url(r'^(?P<cicle>[0-9]+)/$', views.home, name='home'),
+    url(r'^(?P<cicle>[0-9]+)/(?P<topic>\w{1,50})$', views.home, name='home'),
 		url(r'^current/', views.current, name='current'),
 		url(r'^nominee', views.nominee, name="nominee"),
     url(r'^victim/', views.victim, name='victim'),

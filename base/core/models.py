@@ -3,7 +3,7 @@ from django.db import models
 
 TOPICS = (
     ('team_culture', 'Team Culture'),
-    ('project_management', 'Project Management'),
+    ('product_management', 'Product Mgmt'),
     ('marketing', 'Marketing'),
     ('tech', 'Technology'),
     ('design', 'Design'),
@@ -14,6 +14,7 @@ class Human(models.Model):
 	user = models.ForeignKey(
         User, verbose_name="Human", related_name="user", blank=True, null=True
     )
+	avatar = models.ImageField(upload_to='static/avatars/', null=True, blank=True)
 	lightning = models.BooleanField('Available', default=True)
 	current = models.BooleanField('Current', default=False)
 	is_active = models.BooleanField('Active', default=True)

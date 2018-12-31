@@ -3,7 +3,6 @@ var victim = document.getElementById('victim').textContent;
 
 if ( current.length < victim.length ) {
   var spaces = Math.floor((victim.length - current.length)/2);
-  console.log(spaces);
   current = ' '.repeat(spaces) + current;
 } else if ( current.length > victim.length ) {
   var spaces = current.length - victim.length;
@@ -13,7 +12,8 @@ if ( current.length < victim.length ) {
 odoo.default({ el:'.js-odoo', from: current, to: victim, animationDelay: 1000, letterAnimationDelay: 100 });
 
 setTimeout(function(){ 
-	$('.wrapper').fadeIn();
+	$('.wrapper').fadeTo( "slow" , 1);
+  $('.message').fadeTo( "slow" , 1);
 }, 5000);
 
 for (var i = 0; i < 500; i++) {
@@ -27,14 +27,21 @@ function create(i) {
   var colour = "red";
   switch(colourIdx) {
     case 1:
-      colour = "yellow";
+      colour = "tech";
       break;
     case 2:
-      colour = "blue";
+      colour = "design";
+      break;
+    case 3:
+      colour = "product";
+      break;
+    case 3:
+      colour = "marketing";
       break;
     default:
-      colour = "red";
+      colour = "culture";
   }
+
   $('<div class="confetti-'+i+' '+colour+'"></div>').css({
     "width" : width+"px",
     "height" : height+"px",

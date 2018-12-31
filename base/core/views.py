@@ -1,5 +1,8 @@
 # coding: utf-8
-from annoying.decorators import render_to
+import json
+
+from annoying.decorators import render_to, ajax_request
+from django.http import HttpResponse
 from django.shortcuts import redirect
 
 from .models import Human, Talks
@@ -7,25 +10,32 @@ from .forms import TalksForm
 
 
 @render_to('home.html')
-def home(request):
-	talks = Talks.objects.filter(cicle=1)[4:]
-	return { 'talks' : talks }
+def home(request,cicle=None, topic=None):
+	if cicle is None:
+		cicle = Talks.objects.get(pk=1).cicle
+	if topic and topic != '0':
+		talks = Talks.objects.filter(cicle=cicle, topic=topic).order_by('-date')
+	else:
+		talks = Talks.objects.filter(cicle=cicle).order_by('-date')
 
-
-@render_to('current.html')
-def current(request):
 	current = Human.objects.get(is_active=True, current=True)
-	print(current)
 	form = TalksForm(initial={'human': current})
-	if request.POST:
-		form = TalksForm(request.POST)
-		if form.is_valid():
-			talk = form.save(commit=False)
-			talk.cicle = 1
-			talk.save()
-			return redirect('nominee')
+	return { 'talks' : talks, 'current' : current, 'form': form }
 
-	return { 'current' : current, 'form': form }
+
+@ajax_request
+def current(request):
+	if request.method == 'POST':
+		h = Human.objects.get(pk=request.POST.get('human'))
+		t = request.POST.get('topic')
+		n = request.POST.get('name')
+		l = request.POST.get('link')
+		cicle = Talks.objects.get(pk=1).cicle
+		talk = Talks(human=h, topic=t, name=n, link=l, cicle=cicle)
+		talk.save()
+		response_data = {}
+		response_data['result'] = 'Create post successful!'
+		return {'success' : 1}
 
 
 @render_to('nominee.html')
@@ -47,17 +57,24 @@ def nominee(request):
 @render_to('victim.html')
 def victim(request):
 	current = Human.objects.get(is_active=True, current=True)
-	victim = Human.objects.filter(is_active=True, lightning=True).order_by('?').first()
-	
 	current.current = False
-	current.save()
+
+	available = Human.objects.filter(is_active=True, lightning=True).order_by('?')
+	victim = available.first()
 	victim.current = True
 	victim.lightning = False
+	current.save()
 	victim.save()
 
-	return { 'current' : current, 'victim': victim }
+	m = ''
+	if available.count() == 1:
+		humans = Human.objects.filter(is_active=True)
+		cycle = Talks.objects.get(pk=1)
+		m = f'End of cycle #{cycle.cicle}'
+		cycle.cicle = cycle.cicle + 1
+		cycle.save()
+		for h in humans:
+			h.lightning = True
+			h.save()
 
-
-
-
-
+	return { 'current' : current, 'victim': victim, 'message': m }
