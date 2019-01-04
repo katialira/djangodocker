@@ -10,7 +10,7 @@ $(function() {
 		$('.m__filters-topic').val($expath[2]);
 	}
 
-	$('select').on('change', function() {
+	$('.m__filters select').on('change', function() {
 		const $cycle = $('.m__filters-cycle').val();
 		const $topic = $('.m__filters-topic').val();
 		window.location.replace('/'+$cycle+'/'+$topic);
@@ -21,7 +21,7 @@ $(function() {
     event.preventDefault();
 
     $.ajax({
-      url : "current/",
+      url : "/current/",
       type : "POST",
       data : { 
         csrfmiddlewaretoken: $(this).children('input[type=hidden]').val(),
