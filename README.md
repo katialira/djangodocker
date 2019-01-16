@@ -1,4 +1,4 @@
-# lightning.com
+# project
 
 ## Using Docker for Development
 
@@ -13,7 +13,7 @@ SECRET_KEY=my-super-secret-key
 
 Build docker image
 ```
-docker build -t lightning .
+docker build -t project .
 ```
 
 Run all services

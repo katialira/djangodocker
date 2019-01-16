@@ -5,7 +5,7 @@ services:
     web:
         stdin_open: true
         tty: true
-        image: lightning
+        image: project
         build:
             context: .
             dockerfile: Dockerfile
